@@ -19,15 +19,15 @@ longitude_array = horiz_dataset.variables['longitude'][:]
 latitude_array = horiz_dataset.variables['latitude'][:]
 
 
-# for var_name, variable in vert_dataset.variables.items():
-#   print(f"Variable: {var_name}")
-#   print(f"Shape: {variable.shape}")
-#   print(f"Attributes: {variable.__dict__}")
+for var_name, variable in vert_dataset.variables.items():
+  print(f"Variable: {var_name}")
+  print(f"Shape: {variable.shape}")
+  print(f"Attributes: {variable.__dict__}")
 
-# for var_name, variable in horiz_dataset.variables.items():
-#   print(f"Variable: {var_name}")
-#   print(f"Shape: {variable.shape}")
-#   print(f"Attributes: {variable.__dict__}")
+for var_name, variable in horiz_dataset.variables.items():
+  print(f"Variable: {var_name}")
+  print(f"Shape: {variable.shape}")
+  print(f"Attributes: {variable.__dict__}")
 
 
 def slice_along_longitude_line(longitude, vector_component):
@@ -51,8 +51,10 @@ def get_nearest_index(value, array):
       return i
   return len(array) - 1
 
-print(get_nearest_index(2000, depth_array))
-print(depth_array[get_nearest_index(2000,depth_array)])
+# print(get_nearest_index(2000, depth_array))
+# print(depth_array[get_nearest_index(2000,depth_array)])
+
+# print(slice_along_longitude_line(20.5, eastward_component))
 
 print('------------------\n\n\n\n\n')
 
@@ -70,7 +72,7 @@ for i in range(len(latitude_array)):
     latitude_line.append(np.linalg.norm([eastward_slice[i][j],northward_slice[i][j],vertical_slice[i][j]]))
   magnitude_slice.append(latitude_line)
 
-print(magnitude_slice)
+# print(magnitude_slice)
 
 
 with open('./data_processing/copernicus_2000m_currents.csv','w', newline='') as file:
@@ -78,16 +80,16 @@ with open('./data_processing/copernicus_2000m_currents.csv','w', newline='') as 
   csv_writer.writerows(magnitude_slice)
 
 
-# # Create a meshgrid for the latitude and longitude
-# lon, lat = np.meshgrid(longitude_array, latitude_array)
+# Create a meshgrid for the latitude and longitude
+lon, lat = np.meshgrid(longitude_array, latitude_array)
 
-# # Plot the vector field for the surface currents at depth ~2000m
-# plt.figure(figsize=(10, 6))
-# plt.quiver(lon, lat, eastward_component[39], northward_component[39],  color='blue', width=0.002)
-# plt.title('Vector Field Plot')
-# plt.xlabel('Longitude')
-# plt.ylabel('Latitude')
-# plt.show()
+# Plot the vector field for the surface currents at depth ~2000m
+plt.figure(figsize=(10, 6))
+plt.quiver(lon, lat, eastward_component[39], northward_component[39],  color='blue', width=0.002)
+plt.title('Vector Field Plot')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
+plt.show()
 
 
 # Create a meshgrid for the latitude and longitude

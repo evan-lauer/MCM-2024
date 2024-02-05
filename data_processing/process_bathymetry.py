@@ -8,17 +8,17 @@ import matplotlib.pyplot as plt
 # Resolution := 450 meters (15 arc seconds)
 #
 # Elevation refers to the elevation (in meters) at the center of each grid cell.
-FILENAME = 'korea_region_bathymetry.nc'
+FILENAME = 'target_area_bathymetry.nc'
 
 dataset = nc.Dataset('./GEBCO_bathymetry/' + FILENAME)
 
 elevation_array = dataset.variables['elevation'][:]
 
-# Create a 2D meshgrid for latitude and longitude
 latitude_array = dataset.variables['lat'][:]
 longitude_array = dataset.variables['lon'][:]
 
 def plot_ocean_floor():
+  # Create a 2D meshgrid for latitude and longitude 
   lon, lat = np.meshgrid(longitude_array, latitude_array)
 
   # Plot the contour plot
@@ -60,16 +60,16 @@ def calculate_land_proportion(start_lat, end_lat, start_long, end_long):
 # print(calculate_land_proportion(37.5,39,20,21.5))
 
 
-print("Depth and land proportion of Korea region:")
-print(calculate_average_depth(36.8,38.3,124.5,126))
-print(calculate_land_proportion(36.8,38.3,124.5,126))
+# print("Depth and land proportion of Korea region:")
+# print(calculate_average_depth(36.8,38.3,124.5,126))
+# print(calculate_land_proportion(36.8,38.3,124.5,126))
 
-print()
-print(min(latitude_array))
-print(max(latitude_array))
-print()
-print(min(longitude_array))
-print(max(longitude_array))
+# print()
+# print(min(latitude_array))
+# print(max(latitude_array))
+# print()
+# print(min(longitude_array))
+# print(max(longitude_array))
 
 
 
