@@ -6,8 +6,8 @@ import csv
 horiz_currents_filename = 'cmems_mod_glo_phy-cur_anfc_0.083deg_P1D-m_1706987874202.nc'
 vert_currents_filename = 'cmems_mod_glo_phy-wcur_anfc_0.083deg_P1D-m_1706987903452.nc'
 
-horiz_dataset = nc.Dataset('./Copernicus_currents/' + horiz_currents_filename)
-vert_dataset = nc.Dataset('./Copernicus_currents/' + vert_currents_filename)
+horiz_dataset = nc.Dataset('./oceanographic_data/Copernicus_currents/' + horiz_currents_filename)
+vert_dataset = nc.Dataset('./oceanographic_data/Copernicus_currents/' + vert_currents_filename)
 
 
 eastward_component = horiz_dataset.variables['uo'][:][0]

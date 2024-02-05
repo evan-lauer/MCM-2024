@@ -14,8 +14,8 @@ from util.determine_ocean_floor import is_valid_ocean
 horiz_currents_filename = 'cmems_mod_glo_phy-cur_anfc_0.083deg_P1D-m_1706987874202.nc'
 vert_currents_filename = 'cmems_mod_glo_phy-wcur_anfc_0.083deg_P1D-m_1706987903452.nc'
 
-horiz_dataset = nc.Dataset('./Copernicus_currents/' + horiz_currents_filename)
-vert_dataset = nc.Dataset('./Copernicus_currents/' + vert_currents_filename)
+horiz_dataset = nc.Dataset('./oceanographic_data/Copernicus_currents/' + horiz_currents_filename)
+vert_dataset = nc.Dataset('./oceanographic_data/Copernicus_currents/' + vert_currents_filename)
 
 eastward_component = horiz_dataset.variables['uo'][:][0]
 northward_component = horiz_dataset.variables['vo'][:][0]
@@ -179,17 +179,17 @@ def plot_in_3d(coordinate_vectors, directory):
     plt.show()
     
   if SAVE_PLOTS:
-    if not os.path.exists('./trial_data/' + DIRECTORY):
-      os.makedirs('./trial_data/' + DIRECTORY)
+    if not os.path.exists('./trial_data/' + directory):
+      os.makedirs('./trial_data/' + directory)
     ax.view_init(elev=5, azim=90)
-    plt.savefig('./trial_data/' + DIRECTORY + '/frontview.png', bbox_inches='tight')
+    plt.savefig('./trial_data/' + directory + '/frontview.png', bbox_inches='tight')
     ax.view_init(elev=5, azim=0)
-    plt.savefig('./trial_data/' + DIRECTORY + '/leftview.png', bbox_inches='tight')
+    plt.savefig('./trial_data/' + directory + '/leftview.png', bbox_inches='tight')
     ax.view_init(elev=45, azim=45)
     plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9, top=0.9)
-    plt.savefig('./trial_data/' + DIRECTORY + '/cornerview.png')
+    plt.savefig('./trial_data/' + directory + '/cornerview.png')
     ax.view_init(elev=90, azim=90)
-    plt.savefig('./trial_data/' + DIRECTORY + '/topview.png', bbox_inches='tight')
+    plt.savefig('./trial_data/' + directory + '/topview.png', bbox_inches='tight')
 
 DIRECTORY = str(NUM_TRIALS) + 'trials_' + str(initial_coordinates[0]) + 'lat_' + str(initial_coordinates[1]) + 'long_' + str(initial_coordinates[2]) + 'depth'
 if SAVE_PLOTS:

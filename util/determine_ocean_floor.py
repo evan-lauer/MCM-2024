@@ -12,7 +12,7 @@ from util.visualizations import get_nearest_index_closest_val
 # Elevation refers to the elevation (in meters) at the center of each grid cell.
 FILENAME = 'target_area_bathymetry.nc'
 
-dataset = nc.Dataset('./GEBCO_bathymetry/' + FILENAME)
+dataset = nc.Dataset('./oceanographic_data/GEBCO_bathymetry/' + FILENAME)
 
 elevation_array = dataset.variables['elevation'][:]
 

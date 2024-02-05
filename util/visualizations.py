@@ -34,7 +34,7 @@ def plot_ocean_floor(lat_start, lat_end, long_start, long_end):
   #
   # Elevation refers to the elevation (in meters) at the center of each grid cell.
   FILENAME = 'target_area_bathymetry.nc'
-  dataset = nc.Dataset('./GEBCO_bathymetry/' + FILENAME)
+  dataset = nc.Dataset('./oceanographic_data/GEBCO_bathymetry/' + FILENAME)
   # Create a 2D meshgrid for latitude and longitude
   latitude_array = dataset.variables['lat'][:]
   longitude_array = dataset.variables['lon'][:]
@@ -67,7 +67,7 @@ def plot_current_at_depth(depth, lat_start, lat_end, long_start, long_end, direc
 
   horiz_currents_filename = 'cmems_mod_glo_phy-cur_anfc_0.083deg_P1D-m_1706987874202.nc'
 
-  horiz_dataset = nc.Dataset('./Copernicus_currents/' + horiz_currents_filename)
+  horiz_dataset = nc.Dataset('./oceanographic_data/Copernicus_currents/' + horiz_currents_filename)
 
 
   depth_array = horiz_dataset.variables['depth'][:]
