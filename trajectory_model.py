@@ -25,6 +25,8 @@ depth_array = horiz_dataset.variables['depth'][:]
 longitude_array = horiz_dataset.variables['longitude'][:]
 latitude_array = horiz_dataset.variables['latitude'][:]
 
+np.random.seed(0)
+
 # Initialize relevant constants
 #
 STEP_SIZE = 60 * 60              # Step size: seconds
