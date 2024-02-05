@@ -25,7 +25,7 @@ depth_array = horiz_dataset.variables['depth'][:]
 longitude_array = horiz_dataset.variables['longitude'][:]
 latitude_array = horiz_dataset.variables['latitude'][:]
 
-np.random.seed(0)
+np.random.seed(1)
 
 # Initialize relevant constants
 #
@@ -36,7 +36,7 @@ NUM_STEPS = int(DURATION / STEP_SIZE) # Number of steps
 NUM_TRIALS = 30                   # Number of submersibles to simulate
 SAVE_PLOTS = True
 SHOW_PLOTS = False
-initial_coordinates = [38.5176242,20.1793842, 1900] # Latitude must lie within 37-40, longitude within 17.5-21.5
+initial_coordinates = [37.8948704,20.4061121, 1000] # Latitude must lie within 37-40, longitude within 17.5-21.5
 lat_long_variation = 0.0 # 1/125th of a degree latitude (approximately 900m)
 depth_variation = 10
 # Generate a series of random starting coordinates, varying uniformly from += lat_long variation
@@ -173,13 +173,14 @@ def plot_in_3d(coordinate_vectors, directory):
   plt.tick_params(axis='y', labelsize=8)
   plt.tick_params(axis='z', labelsize=8)
 
-  if not os.path.exists('./trial_data/' + DIRECTORY):
-    os.makedirs('./trial_data/' + DIRECTORY)
+  
 
   if SHOW_PLOTS:
     plt.show()
     
   if SAVE_PLOTS:
+    if not os.path.exists('./trial_data/' + DIRECTORY):
+      os.makedirs('./trial_data/' + DIRECTORY)
     ax.view_init(elev=5, azim=90)
     plt.savefig('./trial_data/' + DIRECTORY + '/frontview.png', bbox_inches='tight')
     ax.view_init(elev=5, azim=0)
