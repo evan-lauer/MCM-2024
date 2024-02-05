@@ -1,0 +1,4 @@
+seed = 2
+
+this one is farther off the west coast of kefalonia.
+it's about 3800 meters deep here, we start at 2200.

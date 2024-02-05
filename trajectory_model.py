@@ -186,7 +186,8 @@ def plot_in_3d(coordinate_vectors, directory):
     ax.view_init(elev=5, azim=0)
     plt.savefig('./trial_data/' + DIRECTORY + '/leftview.png', bbox_inches='tight')
     ax.view_init(elev=45, azim=45)
-    plt.savefig('./trial_data/' + DIRECTORY + '/cornerview.png', bbox_inches='tight')
+    plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9, top=0.9)
+    plt.savefig('./trial_data/' + DIRECTORY + '/cornerview.png')
     ax.view_init(elev=90, azim=90)
     plt.savefig('./trial_data/' + DIRECTORY + '/topview.png', bbox_inches='tight')
 
