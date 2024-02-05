@@ -176,6 +176,7 @@ def plot_in_3d(coordinate_vectors, directory):
 
   if SHOW_PLOTS:
     plt.show()
+    
   if SAVE_PLOTS:
     ax.view_init(elev=5, azim=90)
     plt.savefig('./trial_data/' + DIRECTORY + '/frontview.png', bbox_inches='tight')
@@ -183,6 +184,8 @@ def plot_in_3d(coordinate_vectors, directory):
     plt.savefig('./trial_data/' + DIRECTORY + '/leftview.png', bbox_inches='tight')
     ax.view_init(elev=45, azim=45)
     plt.savefig('./trial_data/' + DIRECTORY + '/cornerview.png', bbox_inches='tight')
+    ax.view_init(elev=90, azim=90)
+    plt.savefig('./trial_data/' + DIRECTORY + '/topview.png', bbox_inches='tight')
 
 DIRECTORY = str(NUM_TRIALS) + 'trials_' + str(initial_coordinates[0]) + 'lat_' + str(initial_coordinates[1]) + 'long_' + str(initial_coordinates[2]) + 'depth'
 if SAVE_PLOTS:
