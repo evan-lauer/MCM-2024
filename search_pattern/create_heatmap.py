@@ -205,7 +205,7 @@ def plot_search_path(histograms, i, directory):
 
   # Overlay scatter plot with lines connecting successive points
   plt.scatter(coordinates[:, 1], coordinates[:, 0], color='black', marker='', label='Coordinates',linewidths=1)
-
+  print(len(coordinates))
   # Connect successive points with lines
   for index in range(1, len(coordinates)):
     plt.plot([coordinates[index-1][1], coordinates[index][1]], [coordinates[index-1][0], coordinates[index][0]], color='black', label='_nolegend_')
@@ -223,13 +223,26 @@ def plot_search_path(histograms, i, directory):
   # Display the plot
   # plt.show()
   plt.savefig('./trial_data/' + directory + '/day' + str(i+1) + '.png')
+  plt.close()
 
+
+
+
+
+# ---------------------------------
 # MAIN:
 # filepath_03 = './trial_data/200trials_38.0772144lat_19.8620142long_2200depth/data.csv'
   
-IS_HALF_TRIAL = False
-RUN_ID = 1
-depth = 2750
+IS_HALF_TRIAL = True
+RUN_ID = 3
+depth = 3450
+# ---------------------------------
+
+
+
+
+
+
 if IS_HALF_TRIAL:
   depth = depth / 2
 
@@ -287,11 +300,26 @@ plot_search_path(histograms, 4, directory)
 with open('./trial_data/' + directory + '/probability_of_success.txt', 'w') as file:
   file.write(str(probability_of_find(histograms)))
 
-hours_left = []
-aggregate_probability_of_find = []
+hours_plot = [0]
+aggregate_probability_of_find = [0]
 running_probability_of_failure = 1
-for histogram in histograms:
-  for entry in histogram:
-    print(entry)
+running_hours = 0
+for h in range(len(histograms)):
+  for e in range(len(histograms[h])):
+    p_found = histograms[h][e][1] * histograms[h][e][2]
+    running_probability_of_failure *= (1 - p_found)
+    aggregate_probability_of_find.append(1-running_probability_of_failure)
+    hours_plot.append(h * 24 + (24 - histograms[h][e][3]))
 
+plt.plot(hours_plot, aggregate_probability_of_find, marker='.', color='black', linestyle='-')
+
+
+# plt.scatter(hours_plot, aggregate_probability_of_find, marker='.', color='black', label='Probability of Success vs Time')
+
+
+plt.xlabel('Time (h)')
+plt.ylabel('Probability')
+plt.title('Probability of Success vs Time')
+
+plt.show()
 
