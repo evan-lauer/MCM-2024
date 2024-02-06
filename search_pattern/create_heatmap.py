@@ -192,9 +192,10 @@ def probability_of_find(histograms):
     for entry in histogram:
       probability_of_not_finding_it *= (1 - entry[1] * entry[2])
     p_never_found *= probability_of_not_finding_it
+  print(1 - p_never_found)
   return 1 - p_never_found
 
-def plot_search_path(histograms, i):
+def plot_search_path(histograms, i, directory):
   coordinates = np.ndarray(shape=(len(histograms[i]), 2))
   for index in range(len(histograms[i])):
     coordinates[index][0] = lat_edge_array[i][histograms[i][index][0][0]] + .0025
@@ -220,14 +221,25 @@ def plot_search_path(histograms, i):
   plt.legend()
 
   # Display the plot
-  plt.show()
+  # plt.show()
+  plt.savefig('./trial_data/' + directory + '/day' + str(i+1) + '.png')
 
 # MAIN:
 # filepath_03 = './trial_data/200trials_38.0772144lat_19.8620142long_2200depth/data.csv'
-directory = '1'
+  
+IS_HALF_TRIAL = False
+RUN_ID = 1
+depth = 2750
+if IS_HALF_TRIAL:
+  depth = depth / 2
+
+directory = ''
+if IS_HALF_TRIAL:
+  directory = str(RUN_ID) + '_half'
+else:
+  directory = str(RUN_ID)
 filepath = './trial_data/' + directory + '/data.csv'
-DEPTH = 100
-DEPTH_FACTOR = abs((DEPTH / 5000) - 1)
+DEPTH_FACTOR = abs((depth / 5000) - 1)
 # Path history oldest -> newest
 # './trial_data/30trials_38.0772144lat_19.8620142long_2200depth/data.csv'
 
@@ -267,7 +279,19 @@ for i in range(5):
 histograms = run_search_algorithm(indices_list,std_deviations_list,visited_list,probabilities_list)
 # print(histograms[3])
 # print(visited_list[3])
-plot_search_path(histograms, 2)
-print(probability_of_find(histograms))
+plot_search_path(histograms, 0, directory)
+plot_search_path(histograms, 1, directory)
+plot_search_path(histograms, 2, directory)
+plot_search_path(histograms, 3, directory)
+plot_search_path(histograms, 4, directory)
+with open('./trial_data/' + directory + '/probability_of_success.txt', 'w') as file:
+  file.write(str(probability_of_find(histograms)))
+
+hours_left = []
+aggregate_probability_of_find = []
+running_probability_of_failure = 1
+for histogram in histograms:
+  for entry in histogram:
+    print(entry)
 
 
