@@ -33,10 +33,30 @@ STEP_SIZE = 60 * 60              # Step size: seconds
 SCALE_FACTOR = STEP_SIZE         # We need to scale up our m/s velocities by the number of steps
 DURATION = 60 * 60 * 24 * 5      # Duration: seconds (make sure DURATION is divisible by STEP_SIZE)
 NUM_STEPS = int(DURATION / STEP_SIZE) # Number of steps
-NUM_TRIALS = 200                   # Number of submersibles to simulate
-SAVE_PLOTS = False
-SHOW_PLOTS = True
-initial_coordinates = [38.0772144,19.8620142, 2200] # Latitude must lie within 37-40, longitude within 17.5-21.5
+SAVE_PLOTS = True
+SHOW_PLOTS = not SAVE_PLOTS
+
+NUM_TRIALS = 30                   # Number of submersibles to simulate
+
+TRIAL_ID = 7
+
+IS_HALF_DEPTH_TRIAL = True
+
+# initial_coordinates = [38.4833363,20.2812767, 2750]
+# initial_coordinates = [37.8948704, 20.4061121, 1350]
+# initial_coordinates = [38.0772144, 19.8620142, 3450]
+# initial_coordinates = [39.2957876, 20.0161395, 100]
+# initial_coordinates = [38.6990383, 18.8609235, 2950]
+# initial_coordinates = [37.7715605, 19.2873207, 3000]
+initial_coordinates = [39.6922016, 19.4186879, 600]
+# initial_coordinates = [39.0504328, 19.3304968, 800]
+# initial_coordinates = [39.1070290, 17.9856085, 2000]
+# initial_coordinates = [38.7493493, 20.3656613, 1400]
+
+if IS_HALF_DEPTH_TRIAL:
+  initial_coordinates[2] = 0.5 * initial_coordinates[2]
+
+# initial_coordinates = [38.0772144,19.8620142, 2200] # Latitude must lie within 37-40, longitude within 17.5-21.5
 lat_long_variation = 0.0 # 1/125th of a degree latitude (approximately 900m)
 depth_variation = 10
 # Generate a series of random starting coordinates, varying uniformly from += lat_long variation
@@ -178,7 +198,7 @@ def plot_in_3d(coordinate_vectors, directory):
   if SHOW_PLOTS:
     plt.show()
     
-  if SAVE_PLOTS:
+  if SAVE_PLOTS and NUM_TRIALS == 30:
     if not os.path.exists('./trial_data/' + directory):
       os.makedirs('./trial_data/' + directory)
     ax.view_init(elev=5, azim=90)
@@ -190,10 +210,13 @@ def plot_in_3d(coordinate_vectors, directory):
     plt.savefig('./trial_data/' + directory + '/cornerview.png')
     ax.view_init(elev=90, azim=90)
     plt.savefig('./trial_data/' + directory + '/topview.png', bbox_inches='tight')
-
-DIRECTORY = str(NUM_TRIALS) + 'trials_' + str(initial_coordinates[0]) + 'lat_' + str(initial_coordinates[1]) + 'long_' + str(initial_coordinates[2]) + 'depth'
+directory = ''
+if IS_HALF_DEPTH_TRIAL:
+  directory = str(TRIAL_ID) + '_half'
+else:
+  directory = str(TRIAL_ID)
 if SAVE_PLOTS:
-  write_trial_data_to_csv(coordinate_vectors, NUM_TRIALS, NUM_STEPS, initial_coordinates)
-plot_in_3d(coordinate_vectors, DIRECTORY)
+  write_trial_data_to_csv(coordinate_vectors, NUM_TRIALS, NUM_STEPS, initial_coordinates, directory)
+plot_in_3d(coordinate_vectors, directory)
 if SAVE_PLOTS:
-  plot_current_at_depth(initial_coordinates[2], 37,40,17.5,21.5, DIRECTORY)
+  plot_current_at_depth(initial_coordinates[2], 37,40,17.5,21.5, directory)

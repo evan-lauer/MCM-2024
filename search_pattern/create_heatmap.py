@@ -115,44 +115,6 @@ def eudis5(v1, v2):
   dist = math.sqrt(sum(dist))
   return dist
 
-# MAIN:
-filepath_03 = './trial_data/200trials_38.0772144lat_19.8620142long_2200depth/data.csv'  
-DEPTH = 100
-DEPTH_FACTOR = abs((DEPTH / 5000) - 1)
-# Path history oldest -> newest
-# './trial_data/30trials_38.0772144lat_19.8620142long_2200depth/data.csv'
-
-slices, NUM_TRIALS, NUM_STEPS = get_info_from_csv(filepath_03)
-heatmaps, heatmap_indices, lat_edge_array, lon_edge_array = get_heatmap_and_indices(slices, True)
-std_deviations = calculate_bucket_sds(heatmap_indices, heatmaps, slices)
-
-
-# Turn all occupied indices into a list
-indices_list = []
-for i in range(5):
-  indices_list.append(np.array(list(set(map(tuple, heatmap_indices[i]-1)))))
-
-std_deviations_list = []
-# Turn all nonzero standard deviations into a list in that same order
-for i in range(5):
-  std_devs = np.ndarray(shape=len(indices_list[i]))
-  for j in range(len(indices_list[i])):
-    std_devs[j] = std_deviations[i][indices_list[i][j][0]][indices_list[i][j][1]]
-  std_deviations_list.append(std_devs)
-  
-# Turn all visited cells into a list in that same order
-visited_list = []
-for i in range(5):
-  visited_list.append(np.full(shape=len(indices_list[i]), fill_value=False))
-
-# Turn all probabilities into a list in that same order
-probabilities_list = []
-for i in range(5):
-  probabilities = np.ndarray(shape=len(indices_list[i]))
-  for j in range(len(indices_list[i])):
-    probabilities[j] = heatmaps[i][indices_list[i][j][0]][indices_list[i][j][1]]
-  probabilities_list.append(probabilities)
-
 def run_search_algorithm(indices_list, std_deviations_list, visited_list, probabilities_list):
   histograms = []
   for i in range(5):
@@ -259,6 +221,47 @@ def plot_search_path(histograms, i):
 
   # Display the plot
   plt.show()
+
+# MAIN:
+# filepath_03 = './trial_data/200trials_38.0772144lat_19.8620142long_2200depth/data.csv'
+directory = '1'
+filepath = './trial_data/' + directory + '/data.csv'
+DEPTH = 100
+DEPTH_FACTOR = abs((DEPTH / 5000) - 1)
+# Path history oldest -> newest
+# './trial_data/30trials_38.0772144lat_19.8620142long_2200depth/data.csv'
+
+slices, NUM_TRIALS, NUM_STEPS = get_info_from_csv(filepath)
+heatmaps, heatmap_indices, lat_edge_array, lon_edge_array = get_heatmap_and_indices(slices, True)
+std_deviations = calculate_bucket_sds(heatmap_indices, heatmaps, slices)
+
+
+# Turn all occupied indices into a list
+indices_list = []
+for i in range(5):
+  indices_list.append(np.array(list(set(map(tuple, heatmap_indices[i]-1)))))
+
+std_deviations_list = []
+# Turn all nonzero standard deviations into a list in that same order
+for i in range(5):
+  std_devs = np.ndarray(shape=len(indices_list[i]))
+  for j in range(len(indices_list[i])):
+    std_devs[j] = std_deviations[i][indices_list[i][j][0]][indices_list[i][j][1]]
+  std_deviations_list.append(std_devs)
+  
+# Turn all visited cells into a list in that same order
+visited_list = []
+for i in range(5):
+  visited_list.append(np.full(shape=len(indices_list[i]), fill_value=False))
+
+# Turn all probabilities into a list in that same order
+probabilities_list = []
+for i in range(5):
+  probabilities = np.ndarray(shape=len(indices_list[i]))
+  for j in range(len(indices_list[i])):
+    probabilities[j] = heatmaps[i][indices_list[i][j][0]][indices_list[i][j][1]]
+  probabilities_list.append(probabilities)
+
 
 
 histograms = run_search_algorithm(indices_list,std_deviations_list,visited_list,probabilities_list)
