@@ -33,10 +33,10 @@ STEP_SIZE = 60 * 60              # Step size: seconds
 SCALE_FACTOR = STEP_SIZE         # We need to scale up our m/s velocities by the number of steps
 DURATION = 60 * 60 * 24 * 5      # Duration: seconds (make sure DURATION is divisible by STEP_SIZE)
 NUM_STEPS = int(DURATION / STEP_SIZE) # Number of steps
-SAVE_PLOTS = True
+SAVE_PLOTS = False
 SHOW_PLOTS = not SAVE_PLOTS
 
-NUM_TRIALS = 200                   # Number of submersibles to simulate
+NUM_TRIALS = 50                   # Number of submersibles to simulate
 
 TRIAL_ID = 7
 
@@ -44,11 +44,11 @@ IS_HALF_DEPTH_TRIAL = True
 
 # initial_coordinates = [38.4833363,20.2812767, 2750] # 1
 # initial_coordinates = [37.8948704, 20.4061121, 1350]
-# initial_coordinates = [38.0772144, 19.8620142, 3450]
+initial_coordinates = [38.0772144, 19.8620142, 3450]
 # initial_coordinates = [39.2957876, 20.0161395, 100]
 # initial_coordinates = [38.6990383, 18.8609235, 2950] # 5
 # initial_coordinates = [37.7715605, 19.2873207, 3000]
-initial_coordinates = [39.6922016, 19.4186879, 600]
+# initial_coordinates = [39.6922016, 19.4186879, 600]
 # initial_coordinates = [39.0504328, 19.3304968, 800]
 # initial_coordinates = [39.1070290, 17.9856085, 2000]
 # initial_coordinates = [38.7493493, 20.3656613, 1400] # 10
