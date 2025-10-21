@@ -1,28 +1,31 @@
 import math
 
+
 def add_meters_north(latitude, longitude, north_south_distance):
-  # Earth's radius (approximately spherical Earth)
-  earth_radius = 6378000  # in meters
+    # Earth's radius (approximately spherical Earth)
+    earth_radius = 6378000  # in meters
 
-  # Convert north/south distance to angular distance
-  angular_distance_north_south = north_south_distance / earth_radius
+    # Convert north/south distance to angular distance
+    angular_distance_north_south = north_south_distance / earth_radius
 
-  # Calculate new latitude
-  new_latitude = latitude + math.degrees(angular_distance_north_south)
+    # Calculate new latitude
+    new_latitude = latitude + math.degrees(angular_distance_north_south)
 
-  return new_latitude, longitude
+    return new_latitude, longitude
+
 
 def add_meters_east(latitude, longitude, east_west_distance):
-  # Earth's radius (approximately spherical Earth)
-  earth_radius = 6378000  # in meters
+    # Earth's radius (approximately spherical Earth)
+    earth_radius = 6378000  # in meters
 
-  # Convert east/west distance to angular distance
-  angular_distance_east_west = east_west_distance / (earth_radius * math.cos(math.radians(latitude)))
+    # Convert east/west distance to angular distance
+    angular_distance_east_west = east_west_distance / \
+        (earth_radius * math.cos(math.radians(latitude)))
 
-  # Calculate new longitude
-  new_longitude = longitude + math.degrees(angular_distance_east_west)
+    # Calculate new longitude
+    new_longitude = longitude + math.degrees(angular_distance_east_west)
 
-  return latitude, new_longitude
+    return latitude, new_longitude
 
 # Example usage:
 # original_latitude = 40.7128  # Replace with the actual latitude of your object

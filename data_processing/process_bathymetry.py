@@ -17,42 +17,46 @@ elevation_array = dataset.variables['elevation'][:]
 latitude_array = dataset.variables['lat'][:]
 longitude_array = dataset.variables['lon'][:]
 
-def plot_ocean_floor():
-  # Create a 2D meshgrid for latitude and longitude 
-  lon, lat = np.meshgrid(longitude_array, latitude_array)
 
-  # Plot the contour plot
-  plt.figure(figsize=(10, 8))
-  contour = plt.contourf(lon, lat, elevation_array, cmap='viridis')
-  plt.colorbar(contour, label='Elevation (meters)')
-  plt.title('Ocean Floor Elevation')
-  plt.xlabel('Longitude')
-  plt.ylabel('Latitude')
-  plt.show()
+def plot_ocean_floor():
+    # Create a 2D meshgrid for latitude and longitude
+    lon, lat = np.meshgrid(longitude_array, latitude_array)
+
+    # Plot the contour plot
+    plt.figure(figsize=(10, 8))
+    contour = plt.contourf(lon, lat, elevation_array, cmap='viridis')
+    plt.colorbar(contour, label='Elevation (meters)')
+    plt.title('Ocean Floor Elevation')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    plt.show()
 
 # Expects lat and long in degrees
+
+
 def calculate_average_depth(start_lat, end_lat, start_long, end_long):
-  num_data_points = 0
-  avg = 0
-  for i in range(len(latitude_array)):
-     for j in range(len(longitude_array)):
-        if start_lat <= latitude_array[i] and latitude_array[i] <= end_lat and start_long <= longitude_array[j] and longitude_array[j] <= end_long:
-          if elevation_array[i][j] < 0: # Only include points that are underwater
-            num_data_points += 1
-            avg += (elevation_array[i][j] - avg) / num_data_points
-            
-  return avg
+    num_data_points = 0
+    avg = 0
+    for i in range(len(latitude_array)):
+        for j in range(len(longitude_array)):
+            if start_lat <= latitude_array[i] and latitude_array[i] <= end_lat and start_long <= longitude_array[j] and longitude_array[j] <= end_long:
+                if elevation_array[i][j] < 0:  # Only include points that are underwater
+                    num_data_points += 1
+                    avg += (elevation_array[i][j] - avg) / num_data_points
+
+    return avg
+
 
 def calculate_land_proportion(start_lat, end_lat, start_long, end_long):
-  num_land_points = 0
-  total_points = 0
-  for i in range(len(latitude_array)):
-     for j in range(len(longitude_array)):
-      if start_lat <= latitude_array[i] and latitude_array[i] <= end_lat and start_long <= longitude_array[j] and longitude_array[j] <= end_long:
-        total_points += 1
-        if elevation_array[i][j] >= 0: # Only include points that are on land
-          num_land_points += 1
-  return num_land_points / total_points
+    num_land_points = 0
+    total_points = 0
+    for i in range(len(latitude_array)):
+        for j in range(len(longitude_array)):
+            if start_lat <= latitude_array[i] and latitude_array[i] <= end_lat and start_long <= longitude_array[j] and longitude_array[j] <= end_long:
+                total_points += 1
+                if elevation_array[i][j] >= 0:  # Only include points that are on land
+                    num_land_points += 1
+    return num_land_points / total_points
 
 
 # print("Depth and land proportion of target region:")
@@ -72,13 +76,11 @@ def calculate_land_proportion(start_lat, end_lat, start_long, end_long):
 # print(max(longitude_array))
 
 
-
 # Print the variables and shapes of each variable
 # for var_name, variable in dataset.variables.items():
 #     print(f"Variable: {var_name}")
 #     print(f"Shape: {variable.shape}")
 #     print(f"Attributes: {variable.__dict__}")
-
 plot_ocean_floor()
 # Close the NetCDF file when done
 dataset.close()

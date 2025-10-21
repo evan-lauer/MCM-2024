@@ -22,17 +22,17 @@ longitude_array = dataset.variables['lon'][:]
 
 # Watch out! depth > 0 means we are in the ocean. elevation > 0 means we are on land
 def is_valid_ocean(latitude, longitude, depth):
-  if latitude < 37 or 40 < latitude or longitude < 17.5 or longitude > 21.5:
-    raise ValueError("Error, current location is outside the target area")
-    
-  lat_i = get_nearest_index_closest_val(latitude, latitude_array)
-  long_i = get_nearest_index_closest_val(longitude, longitude_array)
-  # print(latitude_array[lat_i]) 
-  # print(longitude_array[long_i])
-  if elevation_array[lat_i][long_i] >= 0:
-    return False # If lat, long is on land, then we cannot be in a valid ocean
-  elif elevation_array[lat_i][long_i] <= (-1 * depth):
-    return True # If the elevation is lower than the depth, return true
-  return False
+    if latitude < 37 or 40 < latitude or longitude < 17.5 or longitude > 21.5:
+        raise ValueError("Error, current location is outside the target area")
+
+    lat_i = get_nearest_index_closest_val(latitude, latitude_array)
+    long_i = get_nearest_index_closest_val(longitude, longitude_array)
+    # print(latitude_array[lat_i])
+    # print(longitude_array[long_i])
+    if elevation_array[lat_i][long_i] >= 0:
+        return False  # If lat, long is on land, then we cannot be in a valid ocean
+    elif elevation_array[lat_i][long_i] <= (-1 * depth):
+        return True  # If the elevation is lower than the depth, return true
+    return False
 
 # print(is_valid_ocean(39.1, 18.6, 1420))
